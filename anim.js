@@ -1,32 +1,18 @@
-// Sincronizar elementos de audio y texto
+// Sincronizar las letras con la canción
 var audio = document.querySelector("audio");
 var lyrics = document.querySelector("#lyrics");
 
-// Lista de tiempos e historias/letras
+// Array de objetos con el texto de tu imagen y los tiempos sincronizados
 var lyricsData = [
-  { text: "When the night has come", time: 15 },
-  { text: "And the land is dark", time: 17 },
-  { text: "Y la Luna es la luz que brilla ante mí", time: 22 },
-  { text: "Miedo, no, no tendré", time: 30 },
-  { text: "Oh, I won't, no me asustaré", time: 35 },
-  { text: "Just as long as you stand, stand by me", time: 38 },
-  { text: "And darlin', darlin', stand by me", time: 43 },
-  { text: "Oh, stand by me", time: 52 },
-  { text: "Oh, stand", time: 53 },
-  { text: "Junto a mí", time: 55 },
-  { text: "Junto a mí", time: 56 },
-  { text: "Y aunque las montañas o el cielo caiga", time: 60 },
-  { text: "No voy a preocuparme", time: 65 },
-  { text: "Porque sé que tú estás junto a mí", time: 67 },
-  { text: "No lloraré, no lloraré", time: 74 },
-  { text: "Oh, I won't shed a tear", time: 79 },
-  { text: "Porque sé que tú estás junto a mí", time: 83 },
-  { text: "And darlin', darlin', stand by me", time: 88 },
-  { text: "Oh, stand by me", time: 93 },
-  { text: "Oh, stand", time: 98 },
+  { text: "Él la estaba esperando Con una flor amarilla", time: 17 },
+  { text: "Ella lo estaba soñando Con la luz en su pupila", time: 25 },
+  { text: "Y el amarillo del Sol iluminaba la esquina", time: 33 },
+  { text: "Lo sentía tan cercano lo sentía desde niña", time: 41 },
+  { text: "Ella sabía que él sabía Que algún día pasaría", time: 47 },
+  { text: "Que vendría a buscarla Con sus flores amarillas", time: 52 },
 ];
 
-// Actualizar el texto según el tiempo actual de la canción
+// Función para actualizar el texto en pantalla
 function updateLyrics() {
   var time = Math.floor(audio.currentTime);
 
@@ -44,19 +30,14 @@ function updateLyrics() {
   }
 }
 
-// Evento para actualizar sincronizado con la canción
+// Evento para seguir el tiempo de la canción
 audio.addEventListener("timeupdate", updateLyrics);
 
-// Función universal para iniciar el audio en móviles y navegadores
+// Función para activar el audio al interactuar
 function activarMusica() {
-  audio.play().then(() => {
-    console.log("Audio sonando perfectamente.");
-  }).catch((error) => {
-    console.log("Esperando toque del usuario...", error);
-  });
+  audio.play().catch((error) => console.log("Esperando interacción:", error));
 }
 
-// Intentar reproducir de inmediato o al interactuar con la pantalla
 window.addEventListener("load", activarMusica);
 document.addEventListener("click", activarMusica, { once: true });
 document.addEventListener("touchstart", activarMusica, { once: true });
