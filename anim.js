@@ -1,8 +1,8 @@
-// Sincronizar las letras con la canción
+// Sincronizar elementos de audio y texto
 var audio = document.querySelector("audio");
 var lyrics = document.querySelector("#lyrics");
 
-// Array de objetos con cada frase y su segundo de inicio
+// Lista de tiempos e historias/letras
 var lyricsData = [
   { text: "When the night has come", time: 15 },
   { text: "And the land is dark", time: 17 },
@@ -26,11 +26,10 @@ var lyricsData = [
   { text: "Oh, stand", time: 98 },
 ];
 
-// Función para actualizar las letras sin que desaparezcan hasta la siguiente
+// Actualizar el texto según el tiempo actual de la canción
 function updateLyrics() {
   var time = Math.floor(audio.currentTime);
 
-  // Busca la frase más reciente según el tiempo actual
   var currentLine = lyricsData
     .slice()
     .reverse()
@@ -45,31 +44,19 @@ function updateLyrics() {
   }
 }
 
-// Escuchar el avance de la canción
+// Evento para actualizar sincronizado con la canción
 audio.addEventListener("timeupdate", updateLyrics);
 
-// Función para reproducir audio
-function reproducir() {
-  audio.play().catch(function (error) {
-    console.log("Esperando toque del usuario para audio:", error);
+// Función universal para iniciar el audio en móviles y navegadores
+function activarMusica() {
+  audio.play().then(() => {
+    console.log("Audio sonando perfectamente.");
+  }).catch((error) => {
+    console.log("Esperando toque del usuario...", error);
   });
 }
 
-// Intentar reproducir automáticamente al cargar la página
-window.addEventListener("load", reproducir);
-
-// Si el navegador del celular lo frena, iniciar al primer toque/clic
-document.addEventListener("click", reproducir, { once: true });
-document.addEventListener("touchstart", reproducir, { once: true });
-
-// Ocultar el título después de 216 segundos
-function ocultarTitulo() {
-  var titulo = document.querySelector(".titulo");
-  if (titulo) {
-    titulo.style.animation = "fadeOut 3s ease-in-out forwards";
-    setTimeout(function () {
-      titulo.style.display = "none";
-    }, 3000);
-  }
-}
-setTimeout(ocultarTitulo, 216000);
+// Intentar reproducir de inmediato o al interactuar con la pantalla
+window.addEventListener("load", activarMusica);
+document.addEventListener("click", activarMusica, { once: true });
+document.addEventListener("touchstart", activarMusica, { once: true });
